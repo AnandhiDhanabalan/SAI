@@ -108,6 +108,7 @@ MDIX - Medium Dependent Interface Crossover
 MILLI - milli (1/1000)
 MMU - Memory Management Unit
 MPLS - Multi Protocol Label Switching
+MRU - Maximum Receive Unit
 MTU - Maximum Transmission Unit
 NACK - Negative Acknowledgement
 NAPT - Network Address Port Translation
