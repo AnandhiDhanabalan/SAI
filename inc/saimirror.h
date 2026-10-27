@@ -236,7 +236,7 @@ typedef enum _sai_mirror_session_attr_t
      *
      * @type sai_uint8_t
      * @flags MANDATORY_ON_CREATE | CREATE_AND_SET
-     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE
+     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE or SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_SFLOW
      */
     SAI_MIRROR_SESSION_ATTR_IPHDR_VERSION,
 
@@ -245,7 +245,7 @@ typedef enum _sai_mirror_session_attr_t
      *
      * @type sai_uint8_t
      * @flags MANDATORY_ON_CREATE | CREATE_AND_SET
-     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE
+     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE or SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_SFLOW
      */
     SAI_MIRROR_SESSION_ATTR_TOS,
 
@@ -263,7 +263,7 @@ typedef enum _sai_mirror_session_attr_t
      *
      * @type sai_ip_address_t
      * @flags MANDATORY_ON_CREATE | CREATE_AND_SET
-     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE
+     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE or SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_SFLOW
      */
     SAI_MIRROR_SESSION_ATTR_SRC_IP_ADDRESS,
 
@@ -272,7 +272,7 @@ typedef enum _sai_mirror_session_attr_t
      *
      * @type sai_ip_address_t
      * @flags MANDATORY_ON_CREATE | CREATE_AND_SET
-     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE
+     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE or SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_SFLOW
      */
     SAI_MIRROR_SESSION_ATTR_DST_IP_ADDRESS,
 
@@ -281,7 +281,7 @@ typedef enum _sai_mirror_session_attr_t
      *
      * @type sai_mac_t
      * @flags MANDATORY_ON_CREATE | CREATE_AND_SET
-     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE
+     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE or SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_SFLOW
      */
     SAI_MIRROR_SESSION_ATTR_SRC_MAC_ADDRESS,
 
@@ -290,7 +290,7 @@ typedef enum _sai_mirror_session_attr_t
      *
      * @type sai_mac_t
      * @flags MANDATORY_ON_CREATE | CREATE_AND_SET
-     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE
+     * @condition SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_ENHANCED_REMOTE or SAI_MIRROR_SESSION_ATTR_TYPE == SAI_MIRROR_SESSION_TYPE_SFLOW
      */
     SAI_MIRROR_SESSION_ATTR_DST_MAC_ADDRESS,
 
@@ -416,6 +416,26 @@ typedef enum _sai_mirror_session_attr_t
      * @default empty
      */
     SAI_MIRROR_SESSION_ATTR_LABEL_WIDE,
+
+    /**
+     * @brief Guarantee sample rate in packets per second (pps)
+     *
+     * When set to a non-zero value, up to this packet rate per second are always
+     * sampled (100% sampling). Traffic above this rate is statistically sampled
+     * using SAI_MIRROR_SESSION_ATTR_SAMPLE_RATE (approximately G + (R - G) / N
+     * sampled packets per second, where G is this attribute, N is SAMPLE_RATE,
+     * and R is the observed mirror session packet rate).
+     *
+     * A value of 0 disables the guarantee rate feature.
+     *
+     * Rate measurement and enforcement (including behavior on rate transitions,
+     * burst handling, and reset) are implementation-defined.
+     *
+     * @type sai_uint64_t
+     * @flags CREATE_AND_SET
+     * @default 0
+     */
+    SAI_MIRROR_SESSION_ATTR_GUARANTEE_RATE,
 
     /**
      * @brief End of attributes

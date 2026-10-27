@@ -312,6 +312,17 @@ sub CreateApiNameTest
         }
 
         WriteTest "    {";
+
+        if (not defined $main::FUNCTION_DEF{"sai_create_${short}_fn"}
+            or not defined $main::FUNCTION_DEF{"sai_remove_${short}_fn"}
+            or not defined $main::FUNCTION_DEF{"sai_set_${short}_attribute_fn"}
+            or not defined $main::FUNCTION_DEF{"sai_get_${short}_attribute_fn"})
+        {
+            WriteTest "        visited++;";
+            WriteTest "    }";
+            next;
+        }
+
         WriteTest "        sai_${api}_api_t ${api}_api = { 0 };";
 
         if (defined $main::NON_OBJECT_ID_STRUCTS{$ot})
@@ -646,6 +657,8 @@ sub CreateStructUnionSizeCheckTest
             $STRUCTS{$name} = $name;
 
             next if $name =~ /^sai_\w+_api_t$/; # skip api structs
+            next if $name eq "sai_attribute_t";
+            next if $name eq "sai_attribute_value_t";
             next if $name eq "sai_switch_health_data_t";
 
             my $upname = uc($name);
