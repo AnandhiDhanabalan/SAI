@@ -97,10 +97,7 @@ There is no `ANY` value. An empty list means the table is unrestricted (see 3.2 
  * Empty list: the attribute is not configured. The table is unrestricted
  * and behaves as if all packet types were listed. No packet-type
  * validation is applied to entries, and the implementation selects the
- * table resources.
- *
- * IPV4 and NON_IP do not imply ARP. ARP entries require ARP to be listed.
- * Duplicate values are ignored.
+ * table resources based on match qualifiers configured.
  *
  * @type sai_s32_list_t sai_acl_packet_type_t
  * @flags CREATE_ONLY
